@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Poraba</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="fuelType">
+        <item>95</item>
+        <item>98</item>
+        <item>100</item>
+        <item>Diesel</item>
+    </string-array>
+    <string-array name="unit">
+        <item>l</item>
+        <item>galona</item>
+    </string-array>
+    <string-array name="consumptionUnit">
+        <item>l/100km</item>
+        <item>l/mil</item>
+    </string-array>
+    <string-array name="distanceUnit">
+        <item>km</item>
+        <item>milja</item>
+    </string-array>
+    <string name="title_activity_main_navigation_drawer">MainActivityNavigationDrawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main_navigation">MainActivityNavigation</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="action_example">Example action</string>
+    <string-array name="chartType">
+        <item>Day</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
+</resources>

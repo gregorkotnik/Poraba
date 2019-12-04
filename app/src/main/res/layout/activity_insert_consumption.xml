@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.gigi.poraba.Activities.insertConsumption">
+
+    <TextView
+        android:id="@+id/tvOdometer"
+        android:layout_width="141dp"
+        android:layout_height="50dp" />
+
+    <Button
+        android:id="@+id/btnPlus1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="+1" />
+
+    <Button
+        android:id="@+id/btnPlus10"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/btnPlus100"
+        android:text="+10" />
+
+    <Button
+        android:id="@+id/btnPlus100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btnInsertPlus"
+        android:layout_alignParentTop="true"
+        android:text="+100" />
+
+    <EditText
+        android:id="@+id/etCarDistance"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Vnesi stanje števca (km)"
+        android:layout_below="@+id/tvOdometer"
+        />
+    <EditText
+        android:id="@+id/etInsertFuel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Natočeno litrov (l)"
+        android:layout_below="@+id/etCarDistance"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/etPrice"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etInsertFuel"
+        android:hint="Cena za liter"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/etPrice"
+        android:text="Izberi datum:"
+        android:textSize="20dp" />
+
+
+    <Button
+        android:id="@+id/btnDate"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/etPrice"
+        android:hint="Izberi datum" />
+
+    <ImageButton
+        android:id="@+id/btnInsertPlus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="23dp"
+        android:layout_marginEnd="23dp"
+        app:srcCompat="@drawable/plus" />
+
+    <CheckBox
+        android:id="@+id/cbLocation"
+        android:layout_width="186dp"
+        android:layout_height="38dp"
+        android:layout_alignEnd="@+id/tvOdometer"
+        android:layout_below="@+id/tvDate"
+        android:layout_marginEnd="-103dp"
+        android:text="Lokacija" />
+
+    <ImageButton
+        android:id="@+id/imgBtnGas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDate"
+        android:layout_marginEnd="-134dp"
+        android:layout_toStartOf="@+id/btnBack"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_consumption" />
+
+    <ImageView
+        android:id="@+id/btnBackImg"
+        android:layout_width="72dp"
+        android:layout_height="42dp"
+        android:layout_alignBottom="@+id/btnInsertPlus"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_width="237dp"
+        android:layout_height="48dp"
+        android:layout_alignStart="@+id/cbLocation"
+        android:layout_below="@+id/cbLocation"
+        android:text="Lokacija"
+        android:textSize="15dp" />
+
+</RelativeLayout>

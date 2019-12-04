@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.gigi.poraba.Activities.manualCalculate">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Razdalja od zadnjega polnjenja (km)"
+        android:id="@+id/etDistance"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Natočeno goriva (l)"
+        android:id="@+id/etFuel"
+        android:layout_below="@+id/etDistance"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Cena za liter"
+        android:id="@+id/etPrice"
+        android:layout_below="@+id/etFuel"/>
+
+    <TextView
+        android:id="@+id/tvConsumation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/etPrice"
+        android:text="Poraba" />
+    <TextView
+        android:id="@+id/tvFinalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Cena"
+        android:layout_below="@+id/tvConsumation"/>
+
+    <Button
+        android:id="@+id/btnCalculate"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/tvFinalPrice"
+        android:onClick="Calculate"
+        android:text="Izračunaj" />
+
+</RelativeLayout>

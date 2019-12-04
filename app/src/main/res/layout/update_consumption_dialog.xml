@@ -1,39 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ndroid="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_alignParentTop="true"
         android:text="Edit consumption"
         android:textAlignment="center"
+        android:layout_gravity="right"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
 
-    <EditText
-        android:id="@+id/etConsuptionL"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvPriceUpdate"
+        android:layout_width="117dp"
         android:layout_height="wrap_content"
-        android:hint="Vnesi porabo"
-        />
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/etPrice"
+        android:text="Price:" />
+
+    <EditText
+        android:id="@+id/etPrice"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="68dp"
+        android:ems="10"
+        android:hint="Price"
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/etMilageUpdate"
-        android:layout_width="match_parent"
+        android:layout_width="231dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="144dp"
         android:hint="Milage" />
+
     <EditText
         android:id="@+id/etPetrolL"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Vnesi natočeno litrov goriva:"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="220dp"
+        android:hint="Vnesi natočeno litrov goriva:" />
 
     <Button
         android:id="@+id/btnUpdateConsumption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update"/>
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="126dp"
+        android:text="Update" />
+
+    <TextView
+        android:id="@+id/tvFuelUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvMilageUpdate"
+        android:layout_alignTop="@+id/etPetrolL"
+        android:text="Fuel" />
+
+    <TextView
+        android:id="@+id/tvMilageUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvPriceUpdate"
+        android:layout_alignTop="@+id/etMilageUpdate"
+        android:text="Milage" />
+</RelativeLayout>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.CalculateStatisticsFragment"
+    android:padding="5dp"
+    android:background="@drawable/layout_radius"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvStanjeStevca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stanje stevca: " />
+
+            <TextView
+                android:id="@+id/tvSkupnaRazdalja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Skupna razdalja:" />
+
+            <TextView
+                android:id="@+id/tvSkupnoGorivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Skupaj toceno litrov:" />
+
+            <TextView
+                android:id="@+id/tvSkupniStroski"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Stroski skupaj:" />
+
+            <TextView
+                android:id="@+id/tvSkupnoSteviloPolnjenj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Skupno stevilo:" />
+
+            <TextView
+                android:id="@+id/tvLetoDoDatuma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Leto do datuma:" />
+
+            <TextView
+                android:id="@+id/tvPrejsnjeLeto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prejsnje leto:" />
+
+            <TextView
+                android:id="@+id/tvTaMesec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ta mesec: " />
+
+            <TextView
+                android:id="@+id/tvPrejsniMesec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prejsnji mesec(Stevilo polnjenj): " />
+
+            <TextView
+                android:id="@+id/tvMaxPolnjenje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Max polnjenje: " />
+
+            <TextView
+                android:id="@+id/tvMinPolnjenje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Min polnjenje:" />
+
+            <TextView
+                android:id="@+id/tvLetoDoDatumaGorivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Leto do datuma gorivo:" />
+
+            <TextView
+                android:id="@+id/tvPrejsnjeLetoGorivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prejsnje leto gorivo:" />
+
+            <TextView
+                android:id="@+id/tvTaMesecGorivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ta mesec gorivo:" />
+
+            <TextView
+                android:id="@+id/tvPrejsnjiMesecGorivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prejsnji mesec gorivo:" />
+
+            <TextView
+                android:id="@+id/tvLetoDoDatumaStroski"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Leto do datuma (stroski):" />
+
+            <TextView
+                android:id="@+id/tvPrejsnjeLetoStroski"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prejsnje leto (stroski):" />
+
+            <TextView
+                android:id="@+id/tvTaMesecStroski"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ta mesec (stroski):" />
+
+            <TextView
+                android:id="@+id/tvPrejsnjiMesecStroski"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prejsnji mesec (stroski):" />
+
+            <TextView
+                android:id="@+id/tvNajvisjiRacun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Najvisji racun:" />
+
+            <TextView
+                android:id="@+id/tvNajnizjiRacun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Najnizji racun:" />
+
+            <TextView
+                android:id="@+id/tvNajboljsaCena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Najboljsa cena:" />
+
+            <TextView
+                android:id="@+id/tvNajslabsaCena"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Najslabsa cena: " />
+
+            <TextView
+                android:id="@+id/tvNajboljsaCenaNaKilometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Najboljsa cena na kilometer:" />
+
+            <TextView
+                android:id="@+id/tvNajslabsaCenaNaKilometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Najslabsa cena na kilometer:" />
+
+            <TextView
+                android:id="@+id/tvPovprecnoPolnjenje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Povprecno polnjenje: " />
+
+            <TextView
+                android:id="@+id/tvPovprecenRacunPolnjenja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Povprecen racun polnjenja: " />
+
+            <TextView
+                android:id="@+id/tvPovprecnaCenaNaKilometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Povprecna cena na kilometer:" />
+
+            <TextView
+                android:id="@+id/tvPovprecniStrosekNaDan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Povprecni strosek na dan" />
+
+            <TextView
+                android:id="@+id/tvPovprecniStrosekNaMesec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Povprecni strosek na mesec:" />
+
+            <TextView
+                android:id="@+id/tvPovprecniKilometriNaDan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Povprecni kilometri na dan:" />
+
+            <TextView
+                android:id="@+id/tvPovprecniKilometriNaMesec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Povprecni kilometri na mesec:" />
+
+            <TextView
+                android:id="@+id/tvPovrpecnaPorabaGoriva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Povrpecna poraba goriva:" />
+
+            <TextView
+                android:id="@+id/tvNajmanjsaPorabaGoriva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Najmanjsa poraba goriva:" />
+
+            <TextView
+                android:id="@+id/tvNajvecjaPorabaGoriva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Najvecja poraba goriva:" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

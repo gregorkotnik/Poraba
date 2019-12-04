@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.gigi.poraba.Activities.manualCalculate"
+    android:background="#a4c639">
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Pokazi podatke" />
+
+    <ListView
+        android:id="@+id/lvShowResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnShow"
+        android:layout_marginTop="60dp" />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnShow"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="27dp"
+        android:text="Cena za l goriva" />
+
+    <TextView
+        android:id="@+id/tvConsumptionLiters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvPrice"
+        android:layout_marginLeft="68dp"
+        android:layout_marginStart="68dp"
+        android:layout_toEndOf="@+id/tvPrice"
+        android:layout_toRightOf="@+id/tvPrice"
+        android:text="Poraba v (l)" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/tvPrice"
+        android:layout_marginEnd="29dp"
+        android:text="Datum" />
+</RelativeLayout>

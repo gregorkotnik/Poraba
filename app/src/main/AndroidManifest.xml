@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.gigi.poraba">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="HardcodedDebugMode">
+        <activity
+            android:name=".Activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBarCustom"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activities.ShowConsumation" />
+        <activity android:name=".Activities.manualCalculate" />
+        <activity
+            android:name=".Activities.insertConsumption"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Activities.UserLogin" />
+        <activity
+            android:name=".Activities.popWindowsTest"
+            android:theme="@style/AppTheme.CustomTheme" />
+        <activity android:name=".Activities.NewUser" />
+        <activity android:name=".Activities.StationsLocation"></activity>
+    </application>
+
+</manifest>

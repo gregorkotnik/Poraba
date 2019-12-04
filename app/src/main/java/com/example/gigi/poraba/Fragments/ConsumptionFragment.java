@@ -45,7 +45,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 
 	public ConsumptionFragment()
 	{
-		consumptionViewModel = new ConsumptionViewModel();
+		consumptionViewModel = new ConsumptionViewModel(); //Third commit
 	}
 
 	String name = "";// "martina33";//sharedPref.getString("Name",DEFAULT);

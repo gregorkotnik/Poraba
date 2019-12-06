@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 26
 
@@ -21,6 +26,15 @@ android {
         targetCompatibility = '1.8'
         sourceCompatibility = '1.8'
     }
+
+    defaultConfig {
+
+        // should correspond to key/value pairs inside the file
+        buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
+
+    }
+
+
 }
 
 repositories {
@@ -39,6 +53,6 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:15.0.1"
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
 
 }

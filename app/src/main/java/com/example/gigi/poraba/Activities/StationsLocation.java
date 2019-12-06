@@ -51,7 +51,7 @@ public class StationsLocation extends AppCompatActivity {
     public static ListView listView;
     public static ProgressBar spinner;
 
-    private final String API_KEY = "AIzaSyCCvNVzUotAZ2X-NQwVTQpRPfykSSwd1z0";
+    private final String API_KEY = "";
     private FusedLocationProviderClient fusedLocationClient;
     private boolean flag = false;
     static public final int REQUEST_LOCATION = 1;

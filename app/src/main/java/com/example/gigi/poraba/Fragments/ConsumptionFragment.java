@@ -47,7 +47,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		consumptionViewModel = new ConsumptionViewModel();
 	}
 
-	String name = "";// "martina33";//sharedPref.getString("Name",DEFAULT);
+	//String name = "";// "martina33";//sharedPref.getString("Name",DEFAULT);
 
 	ImageButton btnConsumptionAdd;
 	TextView tvAverageConsumption;
@@ -66,7 +66,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		consumptionViewModel.setFuelConsumptionList(new ArrayList<>());
 		consumptionViewModel.setSharedPref(getActivity().getSharedPreferences("LoginData", Context.MODE_PRIVATE));
 
-		name = consumptionViewModel.getSharedPref().getString("Name", DEFAULT);
+		//name = consumptionViewModel.getSharedPref().getString("Name", DEFAULT);
+		consumptionViewModel.setName(consumptionViewModel.getSharedPref().getString("Name", DEFAULT));
 
 		// Decimal format
 		//df = new DecimalFormat("#.##");
@@ -88,7 +89,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		btnConsumptionAdd = view.findViewById(R.id.btnConsumptionAdd);
 		tvAverageConsumption = (TextView) view.findViewById(R.id.tvAverageConsumption2);
 
-		showConsumationFromDB_Async(name);
+		showConsumationFromDB_Async(consumptionViewModel.getName());
 
 		btnConsumptionAdd.setOnClickListener(view1 -> {
 			Intent i = new Intent(getActivity(), insertConsumption.class);
@@ -104,7 +105,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	{
 		super.onStart();
 		checkIfInserted = true;
-		showConsumationFromDB_Async(name);
+		showConsumationFromDB_Async(consumptionViewModel.getName());
 
 	}
 

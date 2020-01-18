@@ -53,7 +53,7 @@ public class StationsLocation extends AppCompatActivity
 	public static ListView listView;
 	public static ProgressBar spinner;
 
-	private final String API_KEY = BuildConfig.API_KEY;
+	private static final String API_KEY = BuildConfig.API_KEY;
 	private FusedLocationProviderClient fusedLocationClient;
 	private boolean flag = false;
 	static public final int REQUEST_LOCATION = 1;
@@ -197,7 +197,7 @@ public class StationsLocation extends AppCompatActivity
 				startPoint.setLongitude(d2);
 
 				URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + longi
-						+ "&radius=1500&type=gas_station&rankBy=1500&key=AIzaSyCCvNVzUotAZ2X-NQwVTQpRPfykSSwd1z0");
+						+ "&radius=1500&type=gas_station&rankBy=1500&key="+API_KEY);
 				HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 				InputStream inputStream = httpURLConnection.getInputStream();
 				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));// ,"utf-8"),8);

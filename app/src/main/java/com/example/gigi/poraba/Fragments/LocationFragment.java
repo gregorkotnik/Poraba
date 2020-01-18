@@ -171,7 +171,7 @@ public class LocationFragment extends android.support.v4.app.Fragment
 				startPoint.setLongitude(d2);
 
 				URL url = new URL("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + lat + "," + longi
-						+ "&radius=1500&type=gas_station&rankBy=1500&key=AIzaSyCCvNVzUotAZ2X-NQwVTQpRPfykSSwd1z0");
+						+ "&radius=1500&type=gas_station&rankBy=1500&key="+API_KEY);
 				HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 				InputStream inputStream = httpURLConnection.getInputStream();
 				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));// ,"utf-8"),8);

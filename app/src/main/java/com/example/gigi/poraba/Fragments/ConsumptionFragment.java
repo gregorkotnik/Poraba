@@ -47,8 +47,6 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		consumptionViewModel = new ConsumptionViewModel();
 	}
 
-	//String name = "";// "martina33";//sharedPref.getString("Name",DEFAULT);
-
 	ImageButton btnConsumptionAdd;
 	TextView tvAverageConsumption;
 
@@ -65,12 +63,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		consumptionViewModel.setConsumptionDB(new DatabaseHelper(getActivity().getApplicationContext()));
 		consumptionViewModel.setFuelConsumptionList(new ArrayList<>());
 		consumptionViewModel.setSharedPref(getActivity().getSharedPreferences("LoginData", Context.MODE_PRIVATE));
-
-		//name = consumptionViewModel.getSharedPref().getString("Name", DEFAULT);
 		consumptionViewModel.setName(consumptionViewModel.getSharedPref().getString("Name", DEFAULT));
-
-		// Decimal format
-		//df = new DecimalFormat("#.##");
 		consumptionViewModel.setDecimalFormat(new DecimalFormat("#.##"));
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 		dfs.setDecimalSeparator('.');

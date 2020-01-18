@@ -318,6 +318,7 @@ public class StatisticalMethods
 		yAxis.setValueFormatter(new MyYAxisValueFormatter());
 		yAxis.addLimitLine(limitLine);
 		yAxis.setAxisLineWidth(1f);
+		yAxis.setAxisMinimum(0f);
 		yAxis.setLabelCount(6, true);
 
 	}

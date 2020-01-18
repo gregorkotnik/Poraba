@@ -23,7 +23,7 @@ public class ConsumptionViewModel
 	private TextView tvAverageConsumption;
 	private double odometer = 0.0;
 	private double editDistance = 0.0;
-	private DecimalFormat df;
+	private DecimalFormat decimalFormat;
 	private boolean checkIfInserted = false;
 
 	public DatabaseHelper getConsumptionDB()
@@ -126,14 +126,14 @@ public class ConsumptionViewModel
 		this.editDistance = editDistance;
 	}
 
-	public DecimalFormat getDf()
+	public DecimalFormat getDecimalFormat()
 	{
-		return df;
+		return decimalFormat;
 	}
 
-	public void setDf(DecimalFormat df)
+	public void setDecimalFormat(DecimalFormat decimalFormat)
 	{
-		this.df = df;
+		this.decimalFormat = decimalFormat;
 	}
 
 	public boolean isCheckIfInserted()

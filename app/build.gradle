@@ -30,7 +30,7 @@ android {
     defaultConfig {
 
         // should correspond to key/value pairs inside the file
-        buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
+        buildConfigField("String", "API_KEY", API_KEY)
 
     }
 

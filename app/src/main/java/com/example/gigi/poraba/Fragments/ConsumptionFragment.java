@@ -22,7 +22,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -56,7 +55,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	double odometer = 0.0;
 	double editDistance = 0.0;
 
-	DecimalFormat df;
+	//DecimalFormat df;
 	boolean checkIfInserted = false;
 
 	@Override
@@ -70,10 +69,13 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		name = consumptionViewModel.getSharedPref().getString("Name", DEFAULT);
 
 		// Decimal format
-		df = new DecimalFormat("#.##");
+		//df = new DecimalFormat("#.##");
+		consumptionViewModel.setDecimalFormat(new DecimalFormat("#.##"));
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 		dfs.setDecimalSeparator('.');
-		df.setDecimalFormatSymbols(dfs);
+
+		// df.setDecimalFormatSymbols(dfs);
+		consumptionViewModel.getDecimalFormat().setDecimalFormatSymbols(dfs);
 	}
 
 	@Override
@@ -225,7 +227,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	private void CalculateAvarageConsumption(final List<FuelConsumption> fuelConsumptionList)
 	{
 
-		DecimalFormat df = new DecimalFormat("#.##");
+		// DecimalFormat df = new DecimalFormat("#.##");
 
 		FuelConsumption fuelConsumption;
 		double firstOdometer = 0.0;
@@ -240,7 +242,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		}
 
 		FinalConsumption = sumConsumption / lastOdometer * 100;
-		String consumptionAverage = df.format(FinalConsumption);
+		// String consumptionAverage = df.format(FinalConsumption);
+		String consumptionAverage = consumptionViewModel.getDecimalFormat().format(FinalConsumption);
 		tvAverageConsumption.setText(consumptionAverage + " l/100 km");
 		SavePreferences.putAverage(getContext(), "average", (float) FinalConsumption);
 	}
@@ -251,7 +254,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		// 8/4/2018
 		// PriUpdate moraš dobiti vse podatke in jih preračunati in shraniti v bazo kot pri insertu!
 		// popravi view za vse podatke
-		final DecimalFormat df = new DecimalFormat("#.##");
+		// final DecimalFormat df = new DecimalFormat("#.##");
 		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		View view = inflater.inflate(R.layout.update_consumption_dialog, null);
@@ -312,7 +315,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 
 				double PetrolLDouble = Double.valueOf(editTextPetrol.getText().toString().trim());
 				double newTotalPrice = fuelConsumption.getPrice() * PetrolLDouble;
-				String formatedTotalPrice = df.format(newTotalPrice).trim();
+				// String formatedTotalPrice = df.format(newTotalPrice).trim();
+				String formatedTotalPrice = consumptionViewModel.getDecimalFormat().format(newTotalPrice).trim();
 				double PriceFinal = Double.parseDouble(formatedTotalPrice);
 				String PriceFinalUpdate = String.valueOf(PriceFinal);
 
@@ -414,7 +418,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 			double tempPetrol = fuelConsumptions.get(i).getPetrol();
 			double newConsumption = tempPetrol / fuelConsumptions.get(i + 1).getDistanceTmp() * 100;
 
-			String formatedConsumtion = df.format(newConsumption).trim();
+			// String formatedConsumtion = df.format(newConsumption).trim();
+			String formatedConsumtion = consumptionViewModel.getDecimalFormat().format(newConsumption).trim();
 			double consumptionFinal = Double.parseDouble(formatedConsumtion);
 
 			fuelConsumptions.get(i + 1).setConsumption(consumptionFinal);
@@ -442,6 +447,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	private void updateOdometer(List<FuelConsumption> fuelConsumptionList)
 	{
 		double newOdometer = 0.0;
+		String formatedConsumtion = "";
 
 		// z to for zanko se sprehodim skozi nastavljen seznam za distance tmp in ponovno izracunam in dodam nazaj v seznam!
 		for (int i = 1; i < fuelConsumptionList.size(); i++)
@@ -449,7 +455,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 			double v1 = fuelConsumptionList.get(i - 1).getDistance();
 			double v2 = fuelConsumptionList.get(i).getDistanceTmp();
 			newOdometer = v1 + v2;
-			String formatedConsumtion = df.format(newOdometer).trim();
+			// String formatedConsumtion = df.format(newOdometer).trim();
+			formatedConsumtion = consumptionViewModel.getDecimalFormat().format(newOdometer).trim();
 			double FinalOdometer = Double.parseDouble(formatedConsumtion);
 			fuelConsumptionList.get(i).setDistance(FinalOdometer);
 
@@ -460,7 +467,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 
 			double tempPetrol = fuelConsumptionList.get(i).getPetrol();
 			double newConsumption = tempPetrol / fuelConsumptionList.get(i + 1).getDistanceTmp() * 100;
-			String formatedConsumtion = df.format(newConsumption).trim();
+			//String formatedConsumtion = df.format(newConsumption).trim();
+			formatedConsumtion = consumptionViewModel.getDecimalFormat().format(newOdometer).trim();
 			double FinalOdometer = Double.parseDouble(formatedConsumtion);
 			fuelConsumptionList.get(i + 1).setConsumption(FinalOdometer);
 		}
@@ -487,6 +495,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	// metode daj v async task, ker šteka
 	private void UpdateConsumptionsAfterInsert(List<FuelConsumption> fuelConsumptions)
 	{
+		String formatedConsumtion="";
 		// Najprej gremo čez seznamin set.amo nove zapise glede prevozenih km
 		for (int i = 0; i < fuelConsumptions.size() - 1; i++)
 		{
@@ -504,7 +513,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 			double tempPetrol = fuelConsumptions.get(i).getPetrol();
 			double newConsumption = tempPetrol / fuelConsumptions.get(i + 1).getDistanceTmp() * 100;
 
-			String formatedConsumtion = df.format(newConsumption).trim();
+			//String formatedConsumtion = df.format(newConsumption).trim();
+			formatedConsumtion = consumptionViewModel.getDecimalFormat().format(newConsumption).trim();
 			double consumptionFinal = Double.parseDouble(formatedConsumtion);
 
 			fuelConsumptions.get(i + 1).setConsumption(consumptionFinal);

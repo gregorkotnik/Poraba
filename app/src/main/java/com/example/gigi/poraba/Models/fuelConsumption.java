@@ -4,21 +4,21 @@ package com.example.gigi.poraba.Models;
  * Created by GIGI on 22/02/2018.
  */
 
-public class FuelConsumption
+public class fuelConsumption
 {
 
 	private int Id, fkId;
-	double Petrol, Distance, price, DistanceTmp, Consumption, TotalPrice;
+	double petrol, Distance, price, DistanceTmp, Consumption, TotalPrice;
 	String date, userName;
 
-	public FuelConsumption()
+	public fuelConsumption()
 	{};
 
-	public FuelConsumption(int id, double Petrol, double Distance, double price, String date, double DistanceTmp, double Consumption, double totalPrice, int fk_id, String userName)
+	public fuelConsumption(int id, double Petrol, double Distance, double price, String date, double DistanceTmp, double Consumption, double totalPrice, int fk_id, String userName)
 	{
 
 		this.Id = id;
-		this.Petrol = Petrol;
+		this.petrol = Petrol;
 		this.Distance = Distance;
 		this.price = price;
 		this.date = date;
@@ -63,12 +63,12 @@ public class FuelConsumption
 
 	public double getPetrol()
 	{
-		return Petrol;
+		return petrol;
 	}
 
 	public void setPetrol(double petrol)
 	{
-		Petrol = petrol;
+		this.petrol = petrol;
 	}
 
 	public double getDistance()

@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.gigi.poraba.R;
 import com.example.gigi.poraba.DB.DatabaseHelper;
 import com.example.gigi.poraba.Interfaces.CustomListenerConsumptionItem;
-import com.example.gigi.poraba.Models.FuelConsumption;
+import com.example.gigi.poraba.Models.fuelConsumption;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -17,11 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class FuelConsumptionAdapterNew extends ArrayAdapter<FuelConsumption>
+public class FuelConsumptionAdapterNew extends ArrayAdapter<fuelConsumption>
 {
 	Context ctx;
 	int listLayoutRes;
-	List<FuelConsumption> consumptionList;
+	List<fuelConsumption> consumptionList;
 	DatabaseHelper databaseHelper;
 	TextView textView;
 
@@ -29,7 +29,7 @@ public class FuelConsumptionAdapterNew extends ArrayAdapter<FuelConsumption>
 	CustomListenerConsumptionItem customListenerDelete;
 	CustomListenerConsumptionItem customListenerView;
 
-	public FuelConsumptionAdapterNew(@NonNull Context ctx, int listLayoutRes, List<FuelConsumption> consumptionList, DatabaseHelper databaseHelper, TextView textView)
+	public FuelConsumptionAdapterNew(@NonNull Context ctx, int listLayoutRes, List<fuelConsumption> consumptionList, DatabaseHelper databaseHelper, TextView textView)
 	{
 		super(ctx, listLayoutRes, consumptionList);
 		this.databaseHelper = databaseHelper;
@@ -83,7 +83,7 @@ public class FuelConsumptionAdapterNew extends ArrayAdapter<FuelConsumption>
 		{
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		final FuelConsumption temp = getItem(position);
+		final fuelConsumption temp = getItem(position);
 		viewHolder.textViewDate.setText(String.valueOf(temp.getDate()));
 		viewHolder.textViewMilage.setText(String.valueOf(temp.getDistance()));
 		viewHolder.textViewTotalPrice.setText(String.valueOf(temp.getTotalPrice()));

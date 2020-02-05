@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class ConsumptionViewModel
 {
 	private DatabaseHelper consumptionDB;
-	private List<FuelConsumption> fuelConsumptionList;
+	private List<fuelConsumption> fuelConsumptionList;
 	private ListView listViewConsumptions;
 	private FuelConsumptionAdapterNew fuelConsumptionAdapterNew;
 	private SharedPreferences sharedPref;
@@ -36,12 +36,12 @@ public class ConsumptionViewModel
 		this.consumptionDB = consumptionDB;
 	}
 
-	public List<FuelConsumption> getFuelConsumptionList()
+	public List<fuelConsumption> getFuelConsumptionList()
 	{
 		return fuelConsumptionList;
 	}
 
-	public void setFuelConsumptionList(List<FuelConsumption> fuelConsumptionList)
+	public void setFuelConsumptionList(List<fuelConsumption> fuelConsumptionList)
 	{
 		this.fuelConsumptionList = fuelConsumptionList;
 	}

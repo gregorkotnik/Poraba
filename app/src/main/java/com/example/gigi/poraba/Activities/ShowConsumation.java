@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.gigi.poraba.Adapters.FuelConsumptionAdapter;
-import com.example.gigi.poraba.Models.FuelConsumption;
+import com.example.gigi.poraba.Models.fuelConsumption;
 import com.example.gigi.poraba.DB.DatabaseHelper;
 import com.example.gigi.poraba.R;
 
@@ -91,7 +91,7 @@ public class ShowConsumation extends AppCompatActivity
 				userName = result.getString(result.getColumnIndex("USER_NAME_FK"));
 				totalPrice = result.getDouble(result.getColumnIndex("TOTAL_PRICE"));
 
-				FuelConsumption fuel_consumption = new FuelConsumption(id, 0.0, fuel, price, date, 0.0, totalPrice, consumption, FK_id, userName);
+				fuelConsumption fuel_consumption = new fuelConsumption(id, 0.0, fuel, price, date, 0.0, totalPrice, consumption, FK_id, userName);
 				fuelConsumptionAdapter.add(fuel_consumption);
 
 			}

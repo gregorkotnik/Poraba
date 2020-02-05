@@ -15,7 +15,8 @@ import com.example.gigi.poraba.Constants.Constants;
 import com.example.gigi.poraba.DB.DatabaseHelper;
 import com.example.gigi.poraba.Interfaces.CustomListenerConsumptionItem;
 import com.example.gigi.poraba.Models.ConsumptionViewModel;
-import com.example.gigi.poraba.Models.FuelConsumption;
+import com.example.gigi.poraba.Models.fuelConsumption;
+import com.example.gigi.poraba.Utils.GsonParserUtils;
 import com.example.gigi.poraba.Utils.SavePreferences;
 
 import android.app.AlertDialog;
@@ -32,7 +33,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,15 +46,6 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	{
 		consumptionViewModel = new ConsumptionViewModel();
 	}
-
-	ImageButton btnConsumptionAdd;
-	TextView tvAverageConsumption;
-
-	double odometer = 0.0;
-	double editDistance = 0.0;
-
-	//DecimalFormat df;
-	boolean checkIfInserted = false;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState)
@@ -79,12 +70,11 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_consumption, container, false);
 		consumptionViewModel.setListViewConsumptions((ListView) view.findViewById(R.id.lvConsumptionFragment));
-		btnConsumptionAdd = view.findViewById(R.id.btnConsumptionAdd);
-		tvAverageConsumption = (TextView) view.findViewById(R.id.tvAverageConsumption2);
-
+		consumptionViewModel.setBtnConsumptionAdd(view.findViewById(R.id.btnConsumptionAdd));
+		consumptionViewModel.setTvAverageConsumption((TextView) view.findViewById(R.id.tvAverageConsumption2));
 		showConsumationFromDB_Async(consumptionViewModel.getName());
 
-		btnConsumptionAdd.setOnClickListener(view1 -> {
+		consumptionViewModel.getBtnConsumptionAdd().setOnClickListener(view1 -> {
 			Intent i = new Intent(getActivity(), insertConsumption.class);
 			startActivity(i);
 			getActivity().finish();
@@ -97,7 +87,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	public void onStart()
 	{
 		super.onStart();
-		checkIfInserted = true;
+		consumptionViewModel.setCheckIfInserted(true);
 		showConsumationFromDB_Async(consumptionViewModel.getName());
 
 	}
@@ -108,18 +98,18 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		// TODO why onStop()
 		// fuelConsumptionAdapterNew.setCustomListenerEdit(null);
 		// fuelConsumptionAdapterNew.setCustomListenerDelete(null);
-		checkIfInserted = false;
+		consumptionViewModel.setCheckIfInserted(false);
 		super.onStop();
 	}
 
 	@Override
-	public void onButtonClickListenerEdit(int position, FuelConsumption value)
+	public void onButtonClickListenerEdit(int position, fuelConsumption value)
 	{
 		updateConsumption(value, position);
 	}
 
 	@Override
-	public void onButtonClickListenerDelete(int position, FuelConsumption value)
+	public void onButtonClickListenerDelete(int position, fuelConsumption value)
 	{
 		Toast.makeText(getActivity(), "Click: " + String.valueOf(position), Toast.LENGTH_SHORT).show();
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -146,9 +136,19 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	}
 
 	@Override
-	public void onItemClickListener(int position, FuelConsumption value)
+	public void onItemClickListener(final int position, final fuelConsumption consumption)
 	{
 		Toast.makeText(getContext(), "Hello from: " + position, Toast.LENGTH_LONG).show();
+
+		final Intent intent = new Intent(getActivity(), insertConsumption.class);
+
+		final String fuelConsumption = GsonParserUtils.getGsonParser().toJson(consumption);
+		intent.putExtra("consumptionValue", fuelConsumption);
+
+
+
+		startActivity(intent);
+
 	}
 
 	private class AddConsumationToList extends AsyncTask<String, Void, Void>
@@ -163,7 +163,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 			consumptionViewModel.getFuelConsumptionList().clear();
 			while (result.moveToNext())
 			{
-				consumptionViewModel.getFuelConsumptionList().add(new FuelConsumption(result.getInt(0), result.getDouble(1), result.getDouble(2), result.getDouble(3), result.getString(4),
+				consumptionViewModel.getFuelConsumptionList().add(new fuelConsumption(result.getInt(0), result.getDouble(1), result.getDouble(2), result.getDouble(3), result.getString(4),
 						result.getDouble(5), result.getDouble(6), result.getDouble(7), result.getInt(8), result.getString(9)));
 			}
 
@@ -177,7 +177,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		{
 			super.onPostExecute(aVoid);
 
-			if (checkIfInserted == true)
+			if (consumptionViewModel.isCheckIfInserted() == true)
 			{
 				UpdateConsumptionsAfterInsert(consumptionViewModel.getFuelConsumptionList() /* fuelConsumptionList */);
 				showConsumationFromDB();
@@ -200,8 +200,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 
 	private void showConsumationFromDB()
 	{
-		consumptionViewModel.setFuelConsumptionAdapterNew(
-				new FuelConsumptionAdapterNew(getActivity(), R.layout.display_fuel_row_consumption, consumptionViewModel.getFuelConsumptionList(), null, tvAverageConsumption));
+		consumptionViewModel.setFuelConsumptionAdapterNew(new FuelConsumptionAdapterNew(getActivity(), R.layout.display_fuel_row_consumption, consumptionViewModel.getFuelConsumptionList(), null,
+				consumptionViewModel.getTvAverageConsumption()));
 		consumptionViewModel.getFuelConsumptionAdapterNew().setCustomListenerEdit(this);
 		consumptionViewModel.getFuelConsumptionAdapterNew().setCustomListenerDelete(this);
 		consumptionViewModel.getFuelConsumptionAdapterNew().setCustomListenerView(this);
@@ -213,17 +213,17 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		}
 		else
 		{
-			tvAverageConsumption.setText(Constants.NOT_APPLICABLE);
+			consumptionViewModel.getTvAverageConsumption().setText(Constants.NOT_APPLICABLE);
 		}
 
 	}
 
-	private void CalculateAvarageConsumption(final List<FuelConsumption> fuelConsumptionList)
+	private void CalculateAvarageConsumption(final List<fuelConsumption> fuelConsumptionList)
 	{
 
 		// DecimalFormat df = new DecimalFormat("#.##");
 
-		FuelConsumption fuelConsumption;
+		fuelConsumption fuelConsumption;
 		double firstOdometer = 0.0;
 		double sumConsumption = 0.0;
 		double lastOdometer = 0.0;
@@ -238,12 +238,12 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		FinalConsumption = sumConsumption / lastOdometer * 100;
 		// String consumptionAverage = df.format(FinalConsumption);
 		String consumptionAverage = consumptionViewModel.getDecimalFormat().format(FinalConsumption);
-		tvAverageConsumption.setText(consumptionAverage + " l/100 km");
+		consumptionViewModel.getTvAverageConsumption().setText(consumptionAverage + " l/100 km");
 		SavePreferences.putAverage(getContext(), "average", (float) FinalConsumption);
 	}
 
 	// ---------------------------------------------------------------Button Edit------------------------------------------------------------------------------------
-	private void updateConsumption(final FuelConsumption fuelConsumption, final int position)
+	private void updateConsumption(final fuelConsumption fuelConsumption, final int position)
 	{
 		// 8/4/2018
 		// PriUpdate moraš dobiti vse podatke in jih preračunati in shraniti v bazo kot pri insertu!
@@ -255,10 +255,10 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		builder.setView(view);
 
 		final String dateTank = String.valueOf(fuelConsumption.getDate());
-		odometer = fuelConsumption.getDistance();
+		consumptionViewModel.setOdometer(fuelConsumption.getDistance());
 		final double distance_tmp = fuelConsumption.getDistanceTmp();
 		final double price = fuelConsumption.getPrice();
-		Log.i("FuelConsumptionEdit", dateTank + " || " + String.valueOf(odometer) + " || " + String.valueOf(price));
+		// Log.i("FuelConsumptionEdit", dateTank + " || " + String.valueOf(odometer) + " || " + String.valueOf(price));
 		final EditText editTextConsumption = view.findViewById(R.id.etPrice);
 		final EditText editTextMilage = view.findViewById(R.id.etMilageUpdate);
 		final EditText editTextPetrol = view.findViewById(R.id.etPetrolL);
@@ -281,10 +281,10 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 			@Override
 			public void onClick(View view)
 			{
-				String ConsumptionL = editTextConsumption.getText().toString().trim();
-				String Milage = editTextMilage.getText().toString().trim();
-				String PetrolL = editTextPetrol.getText().toString().trim();
-				String NewOdometer;
+				final String ConsumptionL = editTextConsumption.getText().toString().trim();
+				final String Milage = editTextMilage.getText().toString().trim();
+				final String PetrolL = editTextPetrol.getText().toString().trim();
+				final String NewOdometer;
 
 				double MilageDouble = Double.parseDouble(Milage);
 
@@ -314,8 +314,8 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 				double PriceFinal = Double.parseDouble(formatedTotalPrice);
 				String PriceFinalUpdate = String.valueOf(PriceFinal);
 
-				editDistance = MilageDouble - distance_tmp;
-				Log.d("editDistance", String.valueOf(editDistance));
+				consumptionViewModel.setEditDistance(MilageDouble - distance_tmp);
+				// Log.d("editDistance", String.valueOf(editDistance));
 				if (CheckDistanceTemp(position, MilageDouble) == false)
 				{
 
@@ -324,10 +324,10 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 					editTextMilage.requestFocus();
 					return;
 				}
-				odometer = odometer + (editDistance);
-				Log.d("odometer", String.valueOf(odometer));
+				consumptionViewModel.setOdometer(consumptionViewModel.getOdometer() + (consumptionViewModel.getEditDistance()));
+				// Log.d("odometer", String.valueOf(odometer));
 
-				NewOdometer = String.valueOf(odometer);
+				NewOdometer = String.valueOf(consumptionViewModel.getOdometer());
 				consumptionViewModel.getFuelConsumptionList().get(position).setConsumption(Double.valueOf(ConsumptionL));
 				consumptionViewModel.getFuelConsumptionList().get(position).setDistanceTmp(Double.valueOf(Milage));
 				consumptionViewModel.getFuelConsumptionList().get(position).setPetrol(Double.valueOf(PetrolL));
@@ -353,7 +353,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		{
 			while (cursor.moveToNext())
 			{
-				consumptionViewModel.getFuelConsumptionList().add(new FuelConsumption(cursor.getInt(0), cursor.getDouble(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getString(4),
+				consumptionViewModel.getFuelConsumptionList().add(new fuelConsumption(cursor.getInt(0), cursor.getDouble(1), cursor.getDouble(2), cursor.getDouble(3), cursor.getString(4),
 						cursor.getDouble(5), cursor.getDouble(6), cursor.getDouble(7), cursor.getInt(8), cursor.getString(9)));
 			}
 		}
@@ -364,7 +364,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		}
 		else
 		{
-			tvAverageConsumption.setText("N/A");
+			consumptionViewModel.getTvAverageConsumption().setText("N/A");
 		}
 
 		cursor.close();
@@ -393,7 +393,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		return false;
 	}
 
-	private void UpdateConsumptionsAfterDelete(List<FuelConsumption> fuelConsumptions, int position)
+	private void UpdateConsumptionsAfterDelete(List<fuelConsumption> fuelConsumptions, int position)
 	{
 		fuelConsumptions.remove(position);
 		for (int i = 0; i < fuelConsumptions.size() - 1; i++)
@@ -433,12 +433,12 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		}
 		else
 		{
-			tvAverageConsumption.setText("N/A");
+			consumptionViewModel.getTvAverageConsumption().setText("N/A");
 		}
 
 	}
 
-	private void updateOdometer(List<FuelConsumption> fuelConsumptionList)
+	private void updateOdometer(List<fuelConsumption> fuelConsumptionList)
 	{
 		double newOdometer = 0.0;
 		String formatedConsumtion = "";
@@ -461,7 +461,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 
 			double tempPetrol = fuelConsumptionList.get(i).getPetrol();
 			double newConsumption = tempPetrol / fuelConsumptionList.get(i + 1).getDistanceTmp() * 100;
-			//String formatedConsumtion = df.format(newConsumption).trim();
+			// String formatedConsumtion = df.format(newConsumption).trim();
 			formatedConsumtion = consumptionViewModel.getDecimalFormat().format(newOdometer).trim();
 			double FinalOdometer = Double.parseDouble(formatedConsumtion);
 			fuelConsumptionList.get(i + 1).setConsumption(FinalOdometer);
@@ -481,15 +481,15 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		}
 		else
 		{
-			tvAverageConsumption.setText("N/A");
+			consumptionViewModel.getTvAverageConsumption().setText("N/A");
 		}
 
 	}
 
 	// metode daj v async task, ker šteka
-	private void UpdateConsumptionsAfterInsert(List<FuelConsumption> fuelConsumptions)
+	private void UpdateConsumptionsAfterInsert(List<fuelConsumption> fuelConsumptions)
 	{
-		String formatedConsumtion="";
+		String formatedConsumtion = "";
 		// Najprej gremo čez seznamin set.amo nove zapise glede prevozenih km
 		for (int i = 0; i < fuelConsumptions.size() - 1; i++)
 		{
@@ -507,7 +507,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 			double tempPetrol = fuelConsumptions.get(i).getPetrol();
 			double newConsumption = tempPetrol / fuelConsumptions.get(i + 1).getDistanceTmp() * 100;
 
-			//String formatedConsumtion = df.format(newConsumption).trim();
+			// String formatedConsumtion = df.format(newConsumption).trim();
 			formatedConsumtion = consumptionViewModel.getDecimalFormat().format(newConsumption).trim();
 			double consumptionFinal = Double.parseDouble(formatedConsumtion);
 
@@ -526,7 +526,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		}
 		else
 		{
-			tvAverageConsumption.setText("N/A");
+			consumptionViewModel.getTvAverageConsumption().setText("N/A");
 		}
 
 	}

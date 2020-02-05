@@ -11,12 +11,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import com.example.gigi.poraba.Models.ConsumptionValue;
 import com.example.gigi.poraba.R;
 import com.example.gigi.poraba.Adapters.FuelConsumptionAdapterNew;
 import com.example.gigi.poraba.DB.DatabaseHelper;
-import com.example.gigi.poraba.Models.FuelConsumption;
+import com.example.gigi.poraba.Models.fuelConsumption;
 import com.example.gigi.poraba.Models.GasStation;
 import com.example.gigi.poraba.Models.User;
+import com.example.gigi.poraba.Utils.GsonParserUtils;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -77,7 +79,7 @@ public class insertConsumption extends AppCompatActivity
 
 	// --------------------------Custom ListViewAdapter-----------------------------
 
-	List<FuelConsumption> fuelConsumptionList;
+	List<fuelConsumption> fuelConsumptionList;
 	ListView listViewConsumptions;
 	FuelConsumptionAdapterNew fuelConsumptionAdapterNew;
 	SharedPreferences sharedPref;
@@ -95,6 +97,17 @@ public class insertConsumption extends AppCompatActivity
 	{
 		super.onStart();
 		Intent i = getIntent();
+
+
+		//TODO pošlji cel objekt(fuelConusmption) iz fragmenta COnsumptionFragment tukaj končal 5.2
+	    final String consumption = i.getExtras().getString("consumptionValue");
+		fuelConsumption consumptionValue = GsonParserUtils.getGsonParser().fromJson(consumption,fuelConsumption.class);
+
+
+
+
+	    Log.d("POSITION",String.valueOf(consumptionValue.getConsumption()));
+
 		if (i.hasExtra("gasStationAdress") && i.hasExtra("gasStationDistance"))
 		{
 			String address = getIntent().getExtras().getString("gasStationAdress");
@@ -520,7 +533,7 @@ public class insertConsumption extends AppCompatActivity
 			fuelConsumptionList.clear();
 			while (result.moveToNext())
 			{
-				fuelConsumptionList.add(new FuelConsumption(result.getInt(0), result.getDouble(1), result.getDouble(2), result.getDouble(3), result.getString(4), result.getDouble(5),
+				fuelConsumptionList.add(new fuelConsumption(result.getInt(0), result.getDouble(1), result.getDouble(2), result.getDouble(3), result.getString(4), result.getDouble(5),
 						result.getDouble(6), result.getDouble(7), result.getInt(8), result.getString(9)));
 			}
 

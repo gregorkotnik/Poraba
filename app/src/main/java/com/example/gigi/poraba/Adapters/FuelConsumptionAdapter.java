@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.gigi.poraba.Models.FuelConsumption;
+import com.example.gigi.poraba.Models.fuelConsumption;
 import com.example.gigi.poraba.R;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class FuelConsumptionAdapter extends ArrayAdapter {
         super(context, resource);
     }
 
-    public void add(FuelConsumption object) {
+    public void add(fuelConsumption object) {
         //dodamo v list
         list.add(object);
         super.add(object);
@@ -62,7 +62,7 @@ public class FuelConsumptionAdapter extends ArrayAdapter {
             fuelConsumprionHolder=(FuelConsumprionHolder) row.getTag();
         }
 
-        FuelConsumption fuelConsumption=(FuelConsumption) getItem(position);
+        fuelConsumption fuelConsumption=(com.example.gigi.poraba.Models.fuelConsumption) getItem(position);
         //Potrebno imeti trenutne kilometre in prevožene, da lahko izracunam poabo
         //Double poraba=fuelConsumption.getFuel()/fuelConsumption.getCarMileage()
         // double finalConsumation=Fuel/Distance*100;

@@ -1,5 +1,6 @@
 package com.example.gigi.poraba.Activities;
 
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -11,14 +12,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.example.gigi.poraba.Models.ConsumptionValue;
 import com.example.gigi.poraba.R;
 import com.example.gigi.poraba.Adapters.FuelConsumptionAdapterNew;
 import com.example.gigi.poraba.DB.DatabaseHelper;
-import com.example.gigi.poraba.Models.fuelConsumption;
 import com.example.gigi.poraba.Models.GasStation;
 import com.example.gigi.poraba.Models.User;
+import com.example.gigi.poraba.Models.fuelConsumption;
 import com.example.gigi.poraba.Utils.GsonParserUtils;
+import com.google.gson.reflect.TypeToken;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -50,31 +51,24 @@ public class insertConsumption extends AppCompatActivity
 
 	DatabaseHelper consimprionDb;
 	EditText etCarDistance, etInsertFuel, etPrice;
-	Button btnInsert, btnDate, btnBack, btnPlus1, btnPlus10, btnPlus100;
+	Button btnDate, btnPlus1, btnPlus10, btnPlus100;
 	ImageButton btnInsertPlus;
-	Cursor result;
 	ImageView btnBackImg;
 	CheckBox cbLocation;
 
 	private TextView tvDate, tvOdometer, tvLocation;
 	private DatePickerDialog.OnDateSetListener DateSetListener;
 	private double distance_tmp;
-	private double Fuel;
 	private double sum;
-	double consumption;
+	private double Fuel;
 
 	public static final String DEFAULT = "N/A";
 	public static final Float DEFAULT_FLOAT = 0.0f;
-	public final String API_KEY = "AIzaSyAKOu5o6iF4oMsMctAa9gHaK9CX2PC6aOQ";
-
-	private String user_id;
-	private int user_id_convert;
 
 	DecimalFormat df;
 
 	ImageView imgBtnGas;
 
-	static String[] values;
 	private boolean CheckDate, CheckDistance = false, checkData = false;
 
 	// --------------------------Custom ListViewAdapter-----------------------------
@@ -85,6 +79,7 @@ public class insertConsumption extends AppCompatActivity
 	SharedPreferences sharedPref;
 	String name;// ="Martina";//sharedPref.getString("Name",DEFAULT);
 	// -----------------------------------------------------------------------------
+	private fuelConsumption consumptionValue = null;
 
 	private static final Pattern DOUBLE_PATTERN = Pattern
 			.compile("[\\x00-\\x20]*[+-]?(NaN|Infinity|((((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)" + "([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?)|"
@@ -98,15 +93,14 @@ public class insertConsumption extends AppCompatActivity
 		super.onStart();
 		Intent i = getIntent();
 
+		// TODO pošlji cel objekt(fuelConusmption) iz fragmenta COnsumptionFragment tukaj končal 5.2
+		final String consumption = i.getExtras().getString("consumptionList");
+		if (consumption != null)
+		{
+			setConsumptionData(consumption);
+		}
 
-		//TODO pošlji cel objekt(fuelConusmption) iz fragmenta COnsumptionFragment tukaj končal 5.2
-	    final String consumption = i.getExtras().getString("consumptionValue");
-		fuelConsumption consumptionValue = GsonParserUtils.getGsonParser().fromJson(consumption,fuelConsumption.class);
-
-
-
-
-	    Log.d("POSITION",String.valueOf(consumptionValue.getConsumption()));
+		//Log.d("POSITION", String.valueOf(consumptionValue.getConsumption()));
 
 		if (i.hasExtra("gasStationAdress") && i.hasExtra("gasStationDistance"))
 		{
@@ -119,6 +113,19 @@ public class insertConsumption extends AppCompatActivity
 
 		}
 
+	}
+
+	private void setConsumptionData(String consumption)
+	{
+		if (consumption != null)
+		{
+			Type listfuelConsumptionObject = new TypeToken<ArrayList<fuelConsumption>>() {}.getType();
+			List<fuelConsumption> fuelConsumptionUpdateList = GsonParserUtils.getGsonParser().fromJson(consumption, listfuelConsumptionObject);
+			for (fuelConsumption fuelConsumption : fuelConsumptionUpdateList)
+			{
+				// TODO 11.2 koncal tukaj - ko uspeš prenesti seznam najprej naredi refactoring tega classa
+			}
+		}
 	}
 
 	@Override
@@ -344,7 +351,7 @@ public class insertConsumption extends AppCompatActivity
 				}
 
 				Fuel = Double.valueOf(etInsertFuel.getText().toString());
-				userName = checkLoginData().getName().toString();
+				userName = checkLoginData().getName();
 				Cursor result = consimprionDb.getUserId(userName);
 				if (result.getCount() == 0)
 				{

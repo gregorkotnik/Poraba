@@ -140,12 +140,24 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 	{
 		Toast.makeText(getContext(), "Hello from: " + position, Toast.LENGTH_LONG).show();
 
+		List<fuelConsumption> fuelConsumptionUpdateList = new ArrayList<>();
+		List<fuelConsumption> fuelConsumptionList = consumptionViewModel.getFuelConsumptionList();
+		final int sizeOfFuelConsumptionList = consumptionViewModel.getFuelConsumptionList().size();
+
+		if (position >= 1 && sizeOfFuelConsumptionList != 0)
+		{
+			fuelConsumptionUpdateList.add(consumptionViewModel.getFuelConsumptionList().get(position - 1));
+			fuelConsumptionUpdateList.add(consumptionViewModel.getFuelConsumptionList().get(position));
+
+			if (!(fuelConsumptionList.size()-1 == position))
+			{
+				fuelConsumptionUpdateList.add(consumptionViewModel.getFuelConsumptionList().get(position + 1));
+			}
+		}
+
 		final Intent intent = new Intent(getActivity(), insertConsumption.class);
-
-		final String fuelConsumption = GsonParserUtils.getGsonParser().toJson(consumption);
-		intent.putExtra("consumptionValue", fuelConsumption);
-
-
+		final String fuelConsumption = GsonParserUtils.getGsonParser().toJson(fuelConsumptionUpdateList);
+		intent.putExtra("consumptionList", fuelConsumption);
 
 		startActivity(intent);
 

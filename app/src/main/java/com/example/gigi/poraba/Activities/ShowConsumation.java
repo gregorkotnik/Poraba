@@ -18,7 +18,7 @@ import com.example.gigi.poraba.Models.fuelConsumption;
 import com.example.gigi.poraba.DB.DatabaseHelper;
 import com.example.gigi.poraba.R;
 
-import static com.example.gigi.poraba.Activities.insertConsumption.DEFAULT;
+import static com.example.gigi.poraba.Activities.InsertConsumption.DEFAULT;
 
 public class ShowConsumation extends AppCompatActivity
 {

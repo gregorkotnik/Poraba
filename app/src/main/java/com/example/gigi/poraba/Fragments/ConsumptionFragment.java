@@ -1,15 +1,15 @@
 package com.example.gigi.poraba.Fragments;
 // Tukaj naredi še asynctaske za shranjevanje pridobivanje podatkov iz baze, pridobivanje lokacije, prvo porabo popravi tako da lahko spreminjaš samo podatke glede količinein datum
 
-import static com.example.gigi.poraba.Activities.insertConsumption.DEFAULT;
+import static com.example.gigi.poraba.Activities.InsertConsumption.DEFAULT;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.gigi.poraba.Activities.InsertConsumption;
 import com.example.gigi.poraba.R;
-import com.example.gigi.poraba.Activities.insertConsumption;
 import com.example.gigi.poraba.Adapters.FuelConsumptionAdapterNew;
 import com.example.gigi.poraba.Constants.Constants;
 import com.example.gigi.poraba.DB.DatabaseHelper;
@@ -75,7 +75,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		showConsumationFromDB_Async(consumptionViewModel.getName());
 
 		consumptionViewModel.getBtnConsumptionAdd().setOnClickListener(view1 -> {
-			Intent i = new Intent(getActivity(), insertConsumption.class);
+			Intent i = new Intent(getActivity(), InsertConsumption.class);
 			startActivity(i);
 			getActivity().finish();
 		});
@@ -155,7 +155,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 			}
 		}
 
-		final Intent intent = new Intent(getActivity(), insertConsumption.class);
+		final Intent intent = new Intent(getActivity(), InsertConsumption.class);
 		final String fuelConsumption = GsonParserUtils.getGsonParser().toJson(fuelConsumptionUpdateList);
 		intent.putExtra("consumptionList", fuelConsumption);
 

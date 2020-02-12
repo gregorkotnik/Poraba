@@ -143,8 +143,8 @@ public class StationsLocation extends AppCompatActivity
 				String text = values[i].toString();
 				GasStation gasStation = new GasStation(listOfGasStations.get(i).getAdress(), listOfGasStations.get(i).getDistance());
 
-				// podatki poslani nazaj v insertConsumption activity
-				Intent intent = new Intent(StationsLocation.this, insertConsumption.class);
+				// podatki poslani nazaj v InsertConsumption activity
+				Intent intent = new Intent(StationsLocation.this, InsertConsumption.class);
 				intent.putExtra("gasStationAdress", gasStation.getAdress().toString());
 				intent.putExtra("gasStationDistance", gasStation.getDistance());
 				startActivity(intent);

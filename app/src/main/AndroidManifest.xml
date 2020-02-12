@@ -26,7 +26,7 @@
         <activity android:name=".Activities.ShowConsumation" />
         <activity android:name=".Activities.manualCalculate" />
         <activity
-            android:name=".Activities.insertConsumption"
+            android:name=".Activities.InsertConsumption"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Activities.UserLogin" />
         <activity

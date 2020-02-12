@@ -17,7 +17,7 @@ import com.example.gigi.poraba.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.gigi.poraba.Activities.insertConsumption.DEFAULT;
+import static com.example.gigi.poraba.Activities.InsertConsumption.DEFAULT;
 
 
 public class CalculateStatisticsFragment extends Fragment {

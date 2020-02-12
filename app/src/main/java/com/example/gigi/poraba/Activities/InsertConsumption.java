@@ -46,7 +46,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class insertConsumption extends AppCompatActivity
+public class InsertConsumption extends AppCompatActivity
 {
 
 	DatabaseHelper consimprionDb;
@@ -179,7 +179,7 @@ public class insertConsumption extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
-				Intent intent = new Intent(insertConsumption.this, MainActivity.class);
+				Intent intent = new Intent(InsertConsumption.this, MainActivity.class);
 				startActivity(intent);
 				finish();
 			}
@@ -207,7 +207,7 @@ public class insertConsumption extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
-				Intent i = new Intent(insertConsumption.this, StationsLocation.class);
+				Intent i = new Intent(InsertConsumption.this, StationsLocation.class);
 				startActivity(i);
 
 			}
@@ -257,7 +257,7 @@ public class insertConsumption extends AppCompatActivity
 				int month = cal.get(Calendar.MONTH);
 				int day = cal.get(Calendar.DAY_OF_MONTH);
 
-				DatePickerDialog dialog = new DatePickerDialog(insertConsumption.this, android.R.style.Theme_Holo_Dialog_MinWidth, DateSetListener, year, month, day);
+				DatePickerDialog dialog = new DatePickerDialog(InsertConsumption.this, android.R.style.Theme_Holo_Dialog_MinWidth, DateSetListener, year, month, day);
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 
@@ -357,7 +357,7 @@ public class insertConsumption extends AppCompatActivity
 				{
 
 					// String a = result.getString(result.getColumnIndex("USER_ID")); //tukaj je težava 13.11. 2018
-					Toast.makeText(insertConsumption.this, "Error no record", Toast.LENGTH_LONG).show();
+					Toast.makeText(InsertConsumption.this, "Error no record", Toast.LENGTH_LONG).show();
 				}
 				else
 				{
@@ -382,15 +382,15 @@ public class insertConsumption extends AppCompatActivity
 						boolean isInserted = InsertAdditionalRow(Distance, Fuel, Price, Date, odometerTMP, userName, UserId);
 						if (isInserted == true)
 						{
-							Toast.makeText(insertConsumption.this, "Podatki vstavljeni", Toast.LENGTH_LONG).show();
-							Intent intent = new Intent(insertConsumption.this, MainActivity.class);
+							Toast.makeText(InsertConsumption.this, "Podatki vstavljeni", Toast.LENGTH_LONG).show();
+							Intent intent = new Intent(InsertConsumption.this, MainActivity.class);
 							intent.putExtra("FlagInsertBetween", isInserted);
 							startActivity(intent);
 							finish();
 						}
 						else
 						{
-							Toast.makeText(insertConsumption.this, "Podatki niso vstavljeni", Toast.LENGTH_LONG).show();
+							Toast.makeText(InsertConsumption.this, "Podatki niso vstavljeni", Toast.LENGTH_LONG).show();
 						}
 					}
 

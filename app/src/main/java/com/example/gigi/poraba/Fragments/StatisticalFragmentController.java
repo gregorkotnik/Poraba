@@ -1,6 +1,6 @@
 package com.example.gigi.poraba.Fragments;
 
-import static com.example.gigi.poraba.Activities.insertConsumption.DEFAULT;
+import static com.example.gigi.poraba.Activities.InsertConsumption.DEFAULT;
 import static com.example.gigi.poraba.Constants.Constants.DAY;
 import static com.example.gigi.poraba.Constants.Constants.MONTH;
 import static com.example.gigi.poraba.Constants.Constants.YEAR;

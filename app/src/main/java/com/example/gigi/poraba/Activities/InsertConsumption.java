@@ -16,6 +16,7 @@ import com.example.gigi.poraba.R;
 import com.example.gigi.poraba.Adapters.FuelConsumptionAdapterNew;
 import com.example.gigi.poraba.DB.DatabaseHelper;
 import com.example.gigi.poraba.Models.GasStation;
+import com.example.gigi.poraba.Models.InsertConsumptionModel;
 import com.example.gigi.poraba.Models.User;
 import com.example.gigi.poraba.Models.fuelConsumption;
 import com.example.gigi.poraba.Utils.GsonParserUtils;
@@ -48,7 +49,14 @@ import android.widget.Toast;
 
 public class InsertConsumption extends AppCompatActivity
 {
+	private InsertConsumptionModel insertConsumptionModel;
 
+	public InsertConsumption()
+	{
+		insertConsumptionModel = new InsertConsumptionModel();
+	}
+
+	//TODO: 11.3 delal sem inserConsumptionModel, zaenkrat narejeno samo za consimprionDb nasledji etCarDistance
 	DatabaseHelper consimprionDb;
 	EditText etCarDistance, etInsertFuel, etPrice;
 	Button btnDate, btnPlus1, btnPlus10, btnPlus100;
@@ -100,7 +108,7 @@ public class InsertConsumption extends AppCompatActivity
 			setConsumptionData(consumption);
 		}
 
-		//Log.d("POSITION", String.valueOf(consumptionValue.getConsumption()));
+		// Log.d("POSITION", String.valueOf(consumptionValue.getConsumption()));
 
 		if (i.hasExtra("gasStationAdress") && i.hasExtra("gasStationDistance"))
 		{
@@ -119,7 +127,8 @@ public class InsertConsumption extends AppCompatActivity
 	{
 		if (consumption != null)
 		{
-			Type listfuelConsumptionObject = new TypeToken<ArrayList<fuelConsumption>>() {}.getType();
+			Type listfuelConsumptionObject = new TypeToken<ArrayList<fuelConsumption>>()
+			{}.getType();
 			List<fuelConsumption> fuelConsumptionUpdateList = GsonParserUtils.getGsonParser().fromJson(consumption, listfuelConsumptionObject);
 			for (fuelConsumption fuelConsumption : fuelConsumptionUpdateList)
 			{
@@ -135,7 +144,8 @@ public class InsertConsumption extends AppCompatActivity
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.activity_insert_consumption);
 
-		consimprionDb = new DatabaseHelper(this);
+		insertConsumptionModel.setConsumptionDataBaseHelper(new DatabaseHelper(this));
+		//consimprionDb = new DatabaseHelper(this);
 
 		// --------------------------Custom ListViewAdapter-----------------------------
 		// listViewConsumptions=(ListView)findViewById(R.id.lvConsumption);
@@ -352,7 +362,9 @@ public class InsertConsumption extends AppCompatActivity
 
 				Fuel = Double.valueOf(etInsertFuel.getText().toString());
 				userName = checkLoginData().getName();
-				Cursor result = consimprionDb.getUserId(userName);
+
+				Cursor result = insertConsumptionModel.getConsumptionDataBaseHelper().getUserId(userName);
+				//Cursor result = consimprionDb.getUserId(userName);
 				if (result.getCount() == 0)
 				{
 
@@ -434,7 +446,8 @@ public class InsertConsumption extends AppCompatActivity
 	{
 
 		// IZ BAZE
-		Cursor cursor = consimprionDb.getOdometer(checkLoginData().name);
+		final Cursor cursor = insertConsumptionModel.getConsumptionDataBaseHelper().getOdometer(checkLoginData().name);
+		//Cursor cursor = consimprionDb.getOdometer(checkLoginData().name);
 		double odometer1 = 0.0;
 		while (cursor.moveToNext())
 		{
@@ -450,7 +463,8 @@ public class InsertConsumption extends AppCompatActivity
 
 	public double LastOdometer(String name)
 	{
-		Cursor cursor = consimprionDb.getOdometer(name);
+		Cursor cursor = insertConsumptionModel.getConsumptionDataBaseHelper().getOdometer(name);
+		//Cursor cursor = consimprionDb.getOdometer(name);
 		double odometer = 0.0;
 		while (cursor.moveToNext())
 		{
@@ -519,7 +533,8 @@ public class InsertConsumption extends AppCompatActivity
 	{
 		double totalPrice = fuel * price;
 		distance_tmp = 0.0;
-		boolean isInserted = consimprionDb.insertData(fuel, distance, price, date, distance_tmp, 0.0, totalPrice, userName, UserId);
+		boolean isInserted = insertConsumptionModel.getConsumptionDataBaseHelper().insertData(fuel, distance, price, date, distance_tmp, 0.0, totalPrice, userName, UserId);
+		//boolean isInserted = consimprionDb.insertData(fuel, distance, price, date, distance_tmp, 0.0, totalPrice, userName, UserId);
 
 		if (isInserted == true)
 		{
@@ -535,8 +550,8 @@ public class InsertConsumption extends AppCompatActivity
 		@Override
 		protected Void doInBackground(String... name)
 		{
-
-			Cursor result = consimprionDb.getFuelConsumptionData(name[0]);
+			Cursor result = insertConsumptionModel.getConsumptionDataBaseHelper().getFuelConsumptionData(name[0]);
+			//Cursor result = consimprionDb.getFuelConsumptionData(name[0]);
 			fuelConsumptionList.clear();
 			while (result.moveToNext())
 			{

@@ -7,6 +7,7 @@ import com.example.gigi.poraba.DB.DatabaseHelper;
 
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class InsertConsumptionModel
 	private SharedPreferences sharedPref;
 	private fuelConsumption consumptionValue;
 	private String userName;
+	private Cursor cursor;
 
 	public DatabaseHelper getConsumptionDataBaseHelper()
 	{
@@ -301,6 +303,16 @@ public class InsertConsumptionModel
 	public void setUserName(String userName)
 	{
 		this.userName = userName;
+	}
+
+	public Cursor getCursor()
+	{
+		return cursor;
+	}
+
+	public void setCursor(Cursor cursor)
+	{
+		this.cursor = cursor;
 	}
 
 }

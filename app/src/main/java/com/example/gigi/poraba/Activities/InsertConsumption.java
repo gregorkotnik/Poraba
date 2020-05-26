@@ -20,6 +20,7 @@ import com.example.gigi.poraba.Models.InsertConsumptionModel;
 import com.example.gigi.poraba.Models.User;
 import com.example.gigi.poraba.Models.fuelConsumption;
 import com.example.gigi.poraba.Utils.GsonParserUtils;
+import com.example.gigi.poraba.Utils.InsertConsumptionUtils;
 import com.google.gson.reflect.TypeToken;
 
 import android.app.DatePickerDialog;
@@ -63,6 +64,9 @@ public class InsertConsumption extends AppCompatActivity
 	ImageButton btnInsertPlus;
 	ImageView btnBackImg;
 	CheckBox cbLocation;
+
+	//https://medium.com/@CodyEngel/4-ways-to-implement-onclicklistener-on-android-9b956cbd2928
+	//http://blog.cubeactive.com/onclicklistener-android-tutorial/
 
 	private TextView tvDate, tvOdometer, tvLocation;
 	private DatePickerDialog.OnDateSetListener DateSetListener;
@@ -145,10 +149,6 @@ public class InsertConsumption extends AppCompatActivity
 		setContentView(R.layout.activity_insert_consumption);
 
 		insertConsumptionModel.setConsumptionDataBaseHelper(new DatabaseHelper(this));
-		//consimprionDb = new DatabaseHelper(this);
-
-		// --------------------------Custom ListViewAdapter-----------------------------
-		// listViewConsumptions=(ListView)findViewById(R.id.lvConsumption);
 		fuelConsumptionList = new ArrayList<>();
 
 		sharedPref = getSharedPreferences("LoginData", Context.MODE_PRIVATE);
@@ -163,18 +163,10 @@ public class InsertConsumption extends AppCompatActivity
 		}
 		// -----------------------------------------------------------------------------
 
-		etCarDistance = (EditText) findViewById(R.id.etCarDistance);
-		etInsertFuel = (EditText) findViewById(R.id.etInsertFuel);
-		etPrice = (EditText) findViewById(R.id.etPrice);
-		tvOdometer = (TextView) findViewById(R.id.tvOdometer);
-		btnDate = (Button) findViewById(R.id.btnDate);
-		btnBackImg = (ImageView) findViewById(R.id.btnBackImg);
-		btnPlus1 = (Button) findViewById(R.id.btnPlus1);
-		btnPlus10 = (Button) findViewById(R.id.btnPlus10);
-		btnPlus100 = (Button) findViewById(R.id.btnPlus100);
-		btnInsertPlus = (ImageButton) findViewById(R.id.btnInsertPlus);
-		imgBtnGas = (ImageView) findViewById(R.id.imgBtnGas);
-		cbLocation = (CheckBox) findViewById(R.id.cbLocation);
+
+		//26.5.
+		setComponentsInModel();
+
 
 		df = new DecimalFormat("#.##");
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
@@ -414,6 +406,11 @@ public class InsertConsumption extends AppCompatActivity
 				}
 			}
 		});
+	}
+
+	private void setComponentsInModel() {
+		InsertConsumptionUtils insertConsumptionUtils = new InsertConsumptionUtils();
+		insertConsumptionUtils.setConsumptionModel(insertConsumptionModel);
 	}
 
 	private void setDate()

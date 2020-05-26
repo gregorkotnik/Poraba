@@ -26,6 +26,7 @@ public class InsertConsumptionModel
 	private Button btnAddTenKilometers;
 	private Button btnAddOneHundredKilimeters;
 	private ImageButton btnInsertConsumption;
+	private ImageView btnBack;
 	private CheckBox cbCheckLocation;
 	private TextView tvDate;
 	private TextView tvOdometer;
@@ -48,6 +49,16 @@ public class InsertConsumptionModel
 	public DatabaseHelper getConsumptionDataBaseHelper()
 	{
 		return consumptionDataBaseHelper;
+	}
+
+	public ImageView getBtnBack()
+	{
+		return btnBack;
+	}
+
+	public void setBtnBack(ImageView btnBack)
+	{
+		this.btnBack = btnBack;
 	}
 
 	public void setConsumptionDataBaseHelper(DatabaseHelper consumptionDataBaseHelper)

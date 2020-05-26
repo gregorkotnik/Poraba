@@ -505,7 +505,7 @@ public class ConsumptionFragment extends Fragment implements CustomListenerConsu
 		// Najprej gremo čez seznamin set.amo nove zapise glede prevozenih km
 		for (int i = 0; i < fuelConsumptions.size() - 1; i++)
 		{
-
+			//TODO: združi izračune
 			double temp = fuelConsumptions.get(i).getDistance(); // prvi km 100000
 			double tempNext = fuelConsumptions.get(i + 1).getDistance();// drugi km 101100
 			double tmpKM = tempNext - temp;

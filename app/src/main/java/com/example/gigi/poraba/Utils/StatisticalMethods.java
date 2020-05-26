@@ -94,6 +94,7 @@ public class StatisticalMethods
 
 	public static void avgConsumptionDay(StaticticalModel staticticalModel)
 	{
+		//TODO: spremenljivke v model
 		double avg = 0.0;
 		double liters = 0;
 		double distance = 0;

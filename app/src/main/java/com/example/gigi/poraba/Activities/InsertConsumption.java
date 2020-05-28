@@ -37,15 +37,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class InsertConsumption extends AppCompatActivity
@@ -57,22 +51,11 @@ public class InsertConsumption extends AppCompatActivity
 		insertConsumptionModel = new InsertConsumptionModel();
 	}
 
-	//TODO: 11.3 delal sem inserConsumptionModel, zaenkrat narejeno samo za consimprionDb nasledji etCarDistance
-	DatabaseHelper consimprionDb;
-	EditText etCarDistance, etInsertFuel, etPrice;
-	Button btnDate, btnPlus1, btnPlus10, btnPlus100;
-	ImageButton btnInsertPlus;
-	ImageView btnBackImg;
-	CheckBox cbLocation;
+	// https://medium.com/@CodyEngel/4-ways-to-implement-onclicklistener-on-android-9b956cbd2928
+	// http://blog.cubeactive.com/onclicklistener-android-tutorial/
 
-	//https://medium.com/@CodyEngel/4-ways-to-implement-onclicklistener-on-android-9b956cbd2928
-	//http://blog.cubeactive.com/onclicklistener-android-tutorial/
-
-	private TextView tvDate, tvOdometer, tvLocation;
+	// TODO: 27.5 tvDate z view model
 	private DatePickerDialog.OnDateSetListener DateSetListener;
-	private double distance_tmp;
-	private double sum;
-	private double Fuel;
 
 	public static final String DEFAULT = "N/A";
 	public static final Float DEFAULT_FLOAT = 0.0f;
@@ -119,9 +102,10 @@ public class InsertConsumption extends AppCompatActivity
 			String address = getIntent().getExtras().getString("gasStationAdress");
 			int distance = (int) getIntent().getExtras().getDouble("gasStationDistance");
 			GasStation gasStation = new GasStation(address, distance);
-			tvLocation.setText(address + " " + distance + " m");
+			// tvLocation.setText(address + " " + distance + " m");
+			insertConsumptionModel.getTvLocation().setText(address + " " + distance + " m");
 			imgBtnGas.setVisibility(View.VISIBLE);
-			cbLocation.setChecked(true);
+			insertConsumptionModel.getCbCheckLocation().setChecked(true);
 
 		}
 
@@ -163,10 +147,8 @@ public class InsertConsumption extends AppCompatActivity
 		}
 		// -----------------------------------------------------------------------------
 
-
-		//26.5.
+		// 26.5.
 		setComponentsInModel();
-
 
 		df = new DecimalFormat("#.##");
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
@@ -174,9 +156,9 @@ public class InsertConsumption extends AppCompatActivity
 		df.setDecimalFormatSymbols(dfs);
 
 		// AddData();
-		sum = LastOdometer(checkLoginData().name);
+		insertConsumptionModel.setSumOfMilage(LastOdometer(checkLoginData().name));
 
-		btnBackImg.setOnClickListener(new View.OnClickListener()
+		insertConsumptionModel.getBtnBack().setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)
@@ -188,19 +170,14 @@ public class InsertConsumption extends AppCompatActivity
 		});
 
 		// check box za lokacijo bencinske
-		cbLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-		{
-			@Override
-			public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
+		insertConsumptionModel.getCbCheckLocation().setOnCheckedChangeListener((compoundButton, isChecked) -> {
+			if (isChecked)
 			{
-				if (isChecked)
-				{
-					imgBtnGas.setVisibility(View.VISIBLE);
-				}
-				else
-				{
-					imgBtnGas.setVisibility(View.GONE);
-				}
+				imgBtnGas.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				imgBtnGas.setVisibility(View.GONE);
 			}
 		});
 		// gumb za dodajanje bencinske
@@ -215,39 +192,26 @@ public class InsertConsumption extends AppCompatActivity
 			}
 		});
 		// gumbi za prištevanje prevoženih kilometrov
-		btnPlus1.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				sum++;
-				etCarDistance.setText(Double.toString(sum));
-			}
-		});
-		btnPlus10.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				sum = sum + 10;
-				etCarDistance.setText(Double.toString(sum));
-
-			}
-		});
-		btnPlus100.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				sum = sum + 100;
-				etCarDistance.setText(Double.toString(sum));
-			}
+		insertConsumptionModel.getBtnAddOneKilometer().setOnClickListener(view -> {
+			insertConsumptionModel.setSumOfMilage(insertConsumptionModel.getSumOfMilage() + 1);
+			insertConsumptionModel.getEtVehicleMileage().setText(Double.toString(insertConsumptionModel.getSumOfMilage()));
 		});
 
-		tvDate = (TextView) findViewById(R.id.tvDate);
-		tvLocation = (TextView) findViewById(R.id.tvLocation);
+		insertConsumptionModel.getBtnAddTenKilometers().setOnClickListener(view -> {
+			insertConsumptionModel.setSumOfMilage(insertConsumptionModel.getSumOfMilage() + 10);
+			insertConsumptionModel.getEtVehicleMileage().setText(Double.toString(insertConsumptionModel.getSumOfMilage()));
+
+		});
+		// TODO: rename getBtnAddOneHundredKilimeters atribute
+		insertConsumptionModel.getBtnAddOneHundredKilimeters().setOnClickListener(view -> {
+			insertConsumptionModel.setSumOfMilage(insertConsumptionModel.getSumOfMilage() + 100);
+			insertConsumptionModel.getEtVehicleMileage().setText(Double.toString(insertConsumptionModel.getSumOfMilage()));
+		});
+
+		// tvDate = (TextView) findViewById(R.id.tvDate);
+		// tvLocation = (TextView) findViewById(R.id.tvLocation);
 		setDate();
-		btnDate.setOnClickListener(new View.OnClickListener()
+		insertConsumptionModel.getBtnDateOfRefueling().setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
@@ -259,7 +223,7 @@ public class InsertConsumption extends AppCompatActivity
 				int month = cal.get(Calendar.MONTH);
 				int day = cal.get(Calendar.DAY_OF_MONTH);
 
-				DatePickerDialog dialog = new DatePickerDialog(InsertConsumption.this, android.R.style.Theme_Holo_Dialog_MinWidth, DateSetListener, year, month, day);
+				DatePickerDialog dialog = new DatePickerDialog(InsertConsumption.this, android.R.style.Theme_Holo_Dialog_MinWidth, insertConsumptionModel.getDateSetListener(), year, month, day);
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.show();
 
@@ -267,6 +231,7 @@ public class InsertConsumption extends AppCompatActivity
 		});
 
 		// izberemo datum, ki se potem prikazemo v textView
+
 		DateSetListener = new DatePickerDialog.OnDateSetListener()
 		{
 			@Override
@@ -280,54 +245,54 @@ public class InsertConsumption extends AppCompatActivity
 				SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 				String formatted = myFormat.format(calendar.getTime());
-				tvDate.setText(formatted);
+				insertConsumptionModel.getTvDate().setText(formatted);
 				// String Date=dayOfMonth+"/"+month+"/"+year;
 				// String Date=year+"-"+month+"-"+dayOfMonth;
 				// tvDate.setText(Date);
 			}
 
 		};
-		tvOdometer.setText("Trenutno stanje števca: " + LastOdometer(checkLoginData().name) + " km");
+		insertConsumptionModel.getTvOdometer().setText("Trenutno stanje števca: " + LastOdometer(checkLoginData().name) + " km");
+		// tvOdometer.setText("Trenutno stanje števca: " + LastOdometer(checkLoginData().name) + " km");
 
-		btnInsertPlus.setOnClickListener(new View.OnClickListener()
+		insertConsumptionModel.getBtnInsertConsumption().setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				if (TextUtils.isEmpty(etCarDistance.getText()))
+				if (TextUtils.isEmpty(insertConsumptionModel.getEtVehicleMileage().getText()))
 				{
-					etCarDistance.setError("Polje ne sme biti prazno");
+					insertConsumptionModel.getEtVehicleMileage().setError("Polje ne sme biti prazno");
 					return;
 				}
-				else if (CheckDouble(etCarDistance.getText().toString()) == false)
+				else if (CheckDouble(insertConsumptionModel.getEtVehicleMileage().getText().toString()) == false)
 				{
-					etCarDistance.setError("Vnesite število pimer:50.5");
+					insertConsumptionModel.getEtVehicleMileage().setError("Vnesite število! Primer: 10.1");
 					return;
 				}
-				if (TextUtils.isEmpty(etInsertFuel.getText()))
+				if (TextUtils.isEmpty(insertConsumptionModel.getEtFuelInput().getText()))
 				{
-					etInsertFuel.setError("Polje ne sme biti prazno");
+					insertConsumptionModel.getEtFuelInput().setError("Polje ne sme biti prazno");
 
 					return;
 				}
-				else if (CheckDouble(etInsertFuel.getText().toString()) == false)
+				else if (CheckDouble(insertConsumptionModel.getEtFuelInput().getText().toString()) == false)
 				{
-					etInsertFuel.setError("Vnesite število primer:50.3");
+					insertConsumptionModel.getEtFuelInput().setError("Vnesite število primer:50.3");
 					return;
 				}
-				if (TextUtils.isEmpty(etPrice.getText()))
+				if (TextUtils.isEmpty(insertConsumptionModel.getEtFuelPrice().getText()))
 				{
-					etPrice.setError("Polje ne sme biti prazno");
+					insertConsumptionModel.getEtFuelPrice().setError("Polje ne sme biti prazno");
 					return;
 				}
-				else if (CheckDouble(etPrice.getText().toString()) == false)
+				else if (CheckDouble(insertConsumptionModel.getEtFuelPrice().getText().toString()) == false)
 				{
-					etPrice.setError("Vnesite število primer 1.25");
+					insertConsumptionModel.getEtFuelPrice().setError("Vnesite število primer 1.25");
 					return;
 				}
 
-				double odometerTMP = Double.valueOf(etCarDistance.getText().toString());
-				String date = String.valueOf(tvDate.getText().toString());
+				String date = insertConsumptionModel.getTvDate().getText().toString();// String.valueOf(tvDate.getText().toString());
 				DateFormat formatter;
 				Date datum;
 				// formatter=new SimpleDateFormat("dd/MM/yyyy");
@@ -340,7 +305,7 @@ public class InsertConsumption extends AppCompatActivity
 					calendar.setTime(datum);
 					Log.d("DatumTest", calendar.toString());
 
-					Double insertedKM = Double.valueOf(etCarDistance.getText().toString());
+					Double insertedKM = Double.valueOf(insertConsumptionModel.getEtVehicleMileage().getText().toString());
 					// Tukaj preveri datum
 					CheckDate = CheckDateInConsumption(calendar, insertedKM);
 					// InsertAdditionalRow()(Distance, Fuel, Price, Date, odometerTMP, userName, insertedKM);
@@ -352,11 +317,11 @@ public class InsertConsumption extends AppCompatActivity
 					e.printStackTrace();
 				}
 
-				Fuel = Double.valueOf(etInsertFuel.getText().toString());
+				insertConsumptionModel.setFuel(Double.valueOf(insertConsumptionModel.getEtFuelInput().getText().toString()));
 				userName = checkLoginData().getName();
 
 				Cursor result = insertConsumptionModel.getConsumptionDataBaseHelper().getUserId(userName);
-				//Cursor result = consimprionDb.getUserId(userName);
+				// Cursor result = consimprionDb.getUserId(userName);
 				if (result.getCount() == 0)
 				{
 
@@ -377,11 +342,11 @@ public class InsertConsumption extends AppCompatActivity
 					// INSERT BETWEEN
 					if (CheckDate == true)
 					{
-						double Fuel = Double.valueOf(etInsertFuel.getText().toString());
-						double Distance = Double.parseDouble(etCarDistance.getText().toString());
-						double Price = Double.parseDouble(etPrice.getText().toString());
-						String Date = tvDate.getText().toString();
-						odometerTMP = Double.valueOf(etCarDistance.getText().toString());
+						double Fuel = Double.valueOf(insertConsumptionModel.getEtFuelInput().getText().toString());
+						double Distance = Double.parseDouble(insertConsumptionModel.getEtVehicleMileage().getText().toString());
+						double Price = Double.parseDouble(insertConsumptionModel.getEtFuelPrice().getText().toString());
+						String Date = insertConsumptionModel.getTvDate().getText().toString();// tvDate.getText().toString();
+						double odometerTMP = Double.valueOf(insertConsumptionModel.getEtVehicleMileage().getText().toString());
 
 						boolean isInserted = InsertAdditionalRow(Distance, Fuel, Price, Date, odometerTMP, userName, UserId);
 						if (isInserted == true)
@@ -400,7 +365,7 @@ public class InsertConsumption extends AppCompatActivity
 
 					else if (CheckDate == false)
 					{
-						etCarDistance.setError("Vnesite pravilne kilometre!");
+						insertConsumptionModel.getEtVehicleMileage().setError("Vnesite pravilne kilometre!");
 						return;
 					}
 				}
@@ -408,7 +373,8 @@ public class InsertConsumption extends AppCompatActivity
 		});
 	}
 
-	private void setComponentsInModel() {
+	private void setComponentsInModel()
+	{
 		InsertConsumptionUtils insertConsumptionUtils = new InsertConsumptionUtils();
 		insertConsumptionUtils.setConsumptionModel(insertConsumptionModel);
 	}
@@ -428,7 +394,8 @@ public class InsertConsumption extends AppCompatActivity
 		SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		String formatted = myFormat.format(cal.getTime());
-		tvDate.setText(formatted);
+		insertConsumptionModel.getTvDate().setText(formatted);
+		// tvDate.setText(formatted);
 
 		// tvDate.setText(year+"-"+month+"-"+day);
 	}
@@ -444,7 +411,7 @@ public class InsertConsumption extends AppCompatActivity
 
 		// IZ BAZE
 		final Cursor cursor = insertConsumptionModel.getConsumptionDataBaseHelper().getOdometer(checkLoginData().name);
-		//Cursor cursor = consimprionDb.getOdometer(checkLoginData().name);
+		// Cursor cursor = consimprionDb.getOdometer(checkLoginData().name);
 		double odometer1 = 0.0;
 		while (cursor.moveToNext())
 		{
@@ -461,7 +428,7 @@ public class InsertConsumption extends AppCompatActivity
 	public double LastOdometer(String name)
 	{
 		Cursor cursor = insertConsumptionModel.getConsumptionDataBaseHelper().getOdometer(name);
-		//Cursor cursor = consimprionDb.getOdometer(name);
+		// Cursor cursor = consimprionDb.getOdometer(name);
 		double odometer = 0.0;
 		while (cursor.moveToNext())
 		{
@@ -529,9 +496,10 @@ public class InsertConsumption extends AppCompatActivity
 	private boolean InsertAdditionalRow(double distance, double fuel, double price, String date, double odometerTMP, String userName, int UserId)
 	{
 		double totalPrice = fuel * price;
-		distance_tmp = 0.0;
-		boolean isInserted = insertConsumptionModel.getConsumptionDataBaseHelper().insertData(fuel, distance, price, date, distance_tmp, 0.0, totalPrice, userName, UserId);
-		//boolean isInserted = consimprionDb.insertData(fuel, distance, price, date, distance_tmp, 0.0, totalPrice, userName, UserId);
+		insertConsumptionModel.setCurrentDistance(0.0);
+		boolean isInserted = insertConsumptionModel.getConsumptionDataBaseHelper().insertData(fuel, distance, price, date, insertConsumptionModel.getCurrentDistance(), 0.0, totalPrice, userName,
+				UserId);
+		// boolean isInserted = consimprionDb.insertData(fuel, distance, price, date, distance_tmp, 0.0, totalPrice, userName, UserId);
 
 		if (isInserted == true)
 		{
@@ -548,7 +516,7 @@ public class InsertConsumption extends AppCompatActivity
 		protected Void doInBackground(String... name)
 		{
 			Cursor result = insertConsumptionModel.getConsumptionDataBaseHelper().getFuelConsumptionData(name[0]);
-			//Cursor result = consimprionDb.getFuelConsumptionData(name[0]);
+			// Cursor result = consimprionDb.getFuelConsumptionData(name[0]);
 			fuelConsumptionList.clear();
 			while (result.moveToNext())
 			{
